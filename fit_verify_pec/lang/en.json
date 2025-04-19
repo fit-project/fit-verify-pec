@@ -1,4 +1,7 @@
 {
+    "TITLE_RIGHT_INFO" : "Verify PEC",
+    "EML_FOLDER_INPUT": "Select EML file",
+    "VERIFICATION_BUTTON" : "Verify",
     "EML_SETTINGS": "Eml Settings",
     "EML_FILE": "file (.eml)",
     "EML_FILES": "EML files (*.eml)",

@@ -3,7 +3,7 @@
 ######
 # -----
 # Copyright (c) 2023 FIT-Project
-# SPDX-License-Identifier: GPL-3.0-only
+# SPDX-License-Identifier: LGPL-3.0-or-later
 # -----
 ######
 
@@ -94,7 +94,7 @@ class VerifyPec(QtWidgets.QMainWindow):
             event.accept()
 
     def __enable_verify_button(self):
-        self.ui.verification_button.setEnabled(bool(self.eml_folder_input.text()))
+        self.ui.verification_button.setEnabled(bool(self.ui.eml_folder_input.text()))
 
     def __select_eml_file(self):
         file, check = QFileDialog.getOpenFileName(
@@ -136,7 +136,7 @@ class VerifyPec(QtWidgets.QMainWindow):
                 email_info = self.__get_mail_info_from_eml()
                 signature = self.__check_signature_exist()
 
-            eml_file_path = self.eml_folder_input.text()
+            eml_file_path = self.ui.eml_folder_input.text()
             path = os.path.dirname(str(eml_file_path))
             ntp = get_ntp_date_and_time(
                 NetworkControllerCheck().configuration["ntp_server"]
@@ -180,7 +180,7 @@ class VerifyPec(QtWidgets.QMainWindow):
             verification_name, verification_status, verification_message
         )
 
-        add_label_in_verification_status_list(self.verification_status_list, label)
+        add_label_in_verification_status_list(self.ui.verification_status_list, label)
 
         return verification_status, email_info
 

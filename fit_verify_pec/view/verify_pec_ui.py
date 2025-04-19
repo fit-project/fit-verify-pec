@@ -799,12 +799,10 @@ class Ui_fit_verify_pec(object):
         QtCore.QMetaObject.connectSlotsByName(fit_verify_pec)
 
     def retranslateUi(self, fit_verify_pec):
-        _translate = QtCore.QCoreApplication.translate
-        fit_verify_pec.setWindowTitle(_translate("fit_verify_pec", "FIT Verify PEC"))
-        self.title_right_info.setText(_translate("fit_verify_pec", "Verify PEC"))
-        self.eml_folder_input.setPlaceholderText(
-            _translate("fit_verify_pec", "Select EML file")
-        )
-        self.verification_button.setText(_translate("fit_verify_pec", "Verify"))
-        self.credits_label.setText(_translate("fit_verify_pec", "By: fit-project.org"))
-        self.version.setText(_translate("fit_verify_pec", "v1.0.3"))
+        fit_verify_pec.setWindowTitle("FIT Verify PEC")
+        self.translations = load_translations()
+        self.title_right_info.setText(self.translations["TITLE_RIGHT_INFO"])
+        self.eml_folder_input.setPlaceholderText(self.translations["EML_FOLDER_INPUT"])
+        self.verification_button.setText(self.translations["VERIFICATION_BUTTON"])
+        self.credits_label.setText("By: fit-project.org")
+        self.version.setText(get_version())
