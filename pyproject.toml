@@ -1,0 +1,34 @@
+[tool.poetry]
+name = "fit_verify_pec"
+version = "1.0.0"
+description = "FIT Verify PEC Module"
+authors = ["FIT Project"]
+license = "LGPL-3.0-or-later"
+packages = [
+    { include = "fit_verify_pec" }
+]
+
+include = [
+    "fit_assets/templates/*.html",
+    "fit_assets/images/logo-640x640.png"
+]
+
+[tool.poetry.dependencies]
+python = ">3.9.0,<3.9.1 || >3.9.1,<3.13"
+PySide6 = "6.9.0"
+cryptography = "^44.0.2"
+bs4 = "^0.0.2"
+xhtml2pdf = "^0.2.17"
+pypdf2 = "^3.0.1"
+jinja2 = "^3.1.6"
+
+fit-cases = {git = "https://github.com/fit-project/fit-cases.git", rev = "main"}
+
+
+
+
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
