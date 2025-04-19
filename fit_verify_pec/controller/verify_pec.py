@@ -11,10 +11,10 @@ import tempfile
 import os
 import locale
 
-from controller.verify_pec.expiration_date import ExpirationDate
-from controller.verify_pec.revoke import Revoke
-from controller.verify_pec.provider import Provider
-from controller.verify_pec.generate_report import GenerateReport
+from fit_verify_pec.controller.expiration_date import ExpirationDate
+from fit_verify_pec.controller.revoke import Revoke
+from fit_verify_pec.controller.provider import Provider
+from fit_verify_pec.controller.generate_report import GenerateReport
 
 
 class verifyPec:

@@ -6,31 +6,37 @@
 # SPDX-License-Identifier: GPL-3.0-only
 # -----
 ######
-import os
-from datetime import datetime
-from controller.verify_pec.html_2_pdf import Html2Pdf
 
-from common.constants.controller.generate_report import *
+import os
+from fit_verify_pec.controller.html_2_pdf import Html2Pdf
+from fit_verify_pec.lang import load_translations
 
 
 class GenerateReport:
-    def pdf_creator(self, report_info):
-        signature = SIGNATURE_NOT_EXIST
-        if report_info.get("is_signature") == True:
-            signature = SIGNATURE_EXIST
 
-        integrity = INTEGRITY_FAIL
+    def pdf_creator(self, report_info):
+        self.translations = load_translations()
+
+        signature = self.translations["SIGNATURE_NOT_EXIST"]
+        if report_info.get("is_signature") == True:
+            signature = self.translations["SIGNATURE_EXIST"]
+
+        integrity = self.translations["INTEGRITY_FAIL"]
         if report_info.get("is_integrity") == True:
-            integrity = INTEGRITY_SUCCESS
+            integrity = self.translations["INTEGRITY_SUCCESS"]
 
         provider_name = report_info.get("provider_name")
-        is_on_agid_list = PROVIDER_IS_NOT_ON_AGID_LIST.format(provider_name)
+        is_on_agid_list = self.translations["PROVIDER_IS_NOT_ON_AGID_LIST"].format(
+            provider_name
+        )
         if report_info.get("is_on_agid_list") == True:
-            is_on_agid_list = PROVIDER_IS_ON_AGID_LIST.format(provider_name)
+            is_on_agid_list = self.translations["PROVIDER_IS_ON_AGID_LIST"].format(
+                provider_name
+            )
 
-        revoked = PEC_ADDRESS_IS_NOT_REVOKED
+        revoked = self.translations["PEC_ADDRESS_IS_NOT_REVOKED"]
         if report_info.get("is_revoked") == True:
-            revoked = PEC_ADDRESS_IS_REVOKED
+            revoked = self.translations["PEC_ADDRESS_IS_REVOKED"]
 
         self.__generate(
             report_info.get("to"),
@@ -74,61 +80,61 @@ class GenerateReport:
         if not os.path.isdir(folder):
             os.makedirs(folder)
         with open(info_file_path, "w") as file:
-            file.write(f"{REPORT_LABEL_DETAILS}\n")
+            file.write(f"{self.translations['REPORT_LABEL_DETAILS']}\n")
             file.write(
                 "======================================================================\n"
             )
-            file.write(f"{REPORT_LABEL_TO}\n")
+            file.write(f"{self.translations['REPORT_LABEL_TO']}\n")
             file.write(f"{to}\n")
             file.write(
                 "======================================================================\n"
             )
-            file.write(f"{REPORT_LABEL_REPLAY_TO}\n")
+            file.write(f"{self.translations['REPORT_LABEL_REPLAY_TO']}\n")
             file.write(f"{replay_to}\n")
             file.write(
                 "======================================================================\n"
             )
-            file.write(f"{REPORT_LABEL_SUBJECT}\n")
+            file.write(f"{self.translations['REPORT_LABEL_SUBJECT']}\n")
             file.write(f"{subject}\n")
             file.write(
                 "======================================================================\n"
             )
-            file.write(f"{REPORT_LABEL_SEND_DATE}\n")
+            file.write(f"{self.translations['REPORT_LABEL_SEND_DATE']}\n")
             file.write(f"{send_date}\n")
             file.write(
                 "======================================================================\n"
             )
             file.write(f"\n")
-            file.write(f"{REPORT_LABEL_RESULTS}\n")
+            file.write(f"{self.translations['REPORT_LABEL_RESULTS']}\n")
             file.write(
                 "======================================================================\n"
             )
-            file.write(f"{REPORT_LABEL_EXPIRATION_DATE}\n")
+            file.write(f"{self.translations['REPORT_LABEL_EXPIRATION_DATE']}\n")
             file.write(f"{expiration_date}\n")
             file.write(
                 "======================================================================\n"
             )
-            file.write(f"{REPORT_LABEL_SIGNATURE}\n")
+            file.write(f"{self.translations['REPORT_LABEL_SIGNATURE']}\n")
             file.write(f"{signature}\n")
             file.write(
                 "======================================================================\n"
             )
-            file.write(f"{REPORT_LABEL_INTEGRITY}\n")
+            file.write(f"{self.translations['REPORT_LABEL_INTEGRITY']}\n")
             file.write(f"{integrity}\n")
             file.write(
                 "======================================================================\n"
             )
-            file.write(f"{REPORT_LABEL_REVOKED}\n")
+            file.write(f"{self.translations['REPORT_LABEL_REVOKED']}\n")
             file.write(f"{revoked}\n")
             file.write(
                 "======================================================================\n"
             )
-            file.write(f"{REPORT_LABEL_PROVIDER_NAME}\n")
+            file.write(f"{self.translations['REPORT_LABEL_PROVIDER_NAME']}\n")
             file.write(f"{provider_name}\n")
             file.write(
                 "======================================================================\n"
             )
-            file.write(f"{REPORT_LABEL_PROVIDER_CHECK}\n")
+            file.write(f"{self.translations['REPORT_LABEL_PROVIDER_CHECK']}\n")
             file.write(f"{is_on_agid_list}\n")
             file.write(
                 "======================================================================\n"

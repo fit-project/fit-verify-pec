@@ -9,7 +9,7 @@
 
 import os
 
-from PySide6 import QtCore, QtWidgets, uic
+from PySide6 import QtCore, QtWidgets
 from PySide6.QtWidgets import QFileDialog
 
 from fit_verify_pec.view.verify_pec_ui import (
@@ -43,9 +43,8 @@ from fit_verify_pec.lang import load_translations
 
 
 class VerifyPec(QtWidgets.QMainWindow):
-    stop_signal = QtCore.pyqtSignal()
 
-    def __init__(self, wizard):
+    def __init__(self, wizard=None):
         super(VerifyPec, self).__init__(wizard)
         self.acquisition_directory = None
         self.wizard = wizard
@@ -295,5 +294,6 @@ class VerifyPec(QtWidgets.QMainWindow):
         self.wizard.show()
 
     def closeEvent(self, event):
-        event.ignore()
-        self.__back_to_wizard()
+        if self.wizard is not None:
+            event.ignore()
+            self.__back_to_wizard()
