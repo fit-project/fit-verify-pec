@@ -29,15 +29,16 @@ from fit_common.gui.utils import (
 from fit_verify_pec.controller.verify_pec import (
     verifyPec as verifyPecController,
 )
-from fit_configurations.controller.tabs.network.networkcheck import (
-    NetworkControllerCheck,
+from fit_configurations.controller.tabs.network.network_check import (
+    NetworkCheckController,
 )
 
 from fit_configurations.controller.tabs.general.general import (
-    General as GeneralConfigurationController,
+    GeneralController as GeneralConfigurationController,
 )
 
-from fit_common.core.utils import get_ntp_date_and_time, get_version
+from fit_common.core import get_version
+from fit_common.core.utils import get_ntp_date_and_time
 
 from fit_verify_pec.lang import load_translations
 
@@ -72,7 +73,7 @@ class VerifyPec(QtWidgets.QMainWindow):
         self.ui.close_button.clicked.connect(self.close)
 
         # SET VERSION
-        self.ui.version.setText(get_version())
+        self.ui.version.setText(f"v{get_version()}")
 
         # EML FOLDER BUTTON
         self.ui.eml_folder_button.clicked.connect(self.__select_eml_file)
@@ -139,7 +140,7 @@ class VerifyPec(QtWidgets.QMainWindow):
             eml_file_path = self.ui.eml_folder_input.text()
             path = os.path.dirname(str(eml_file_path))
             ntp = get_ntp_date_and_time(
-                NetworkControllerCheck().configuration["ntp_server"]
+                NetworkCheckController().configuration["ntp_server"]
             )
             case_info = CaseFormDialog().get_case_info(path)
 
