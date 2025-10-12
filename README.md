@@ -1,45 +1,54 @@
 # fit-verify-pec
 
-Verify PEC Module for the **FIT Project**, built using [PySide6](https://doc.qt.io/qtforpython/).
+**FIT Verify PEC Module** is a component of the [FIT Project](https://github.com/fit-project) ecosystem.
 
 This module provides a graphical interface for verifying the PEC applied sent during the acquisition process.
 
 ---
 
-## 🔗 Related FIT components
+## Related FIT components
 
-This package is part of the broader [fit](https://github.com/fit-project/fit) ecosystem and depends on:
+This module depends on:
 
-- [`fit-common`](https://github.com/fit-project/fit-common) – shared utility and core logic
-- [`fit-assets`](https://github.com/fit-project/fit-assets) – UI resources and assets
-- [`fit-configurations`](https://github.com/fit-project/fit-configurations.git) – Configuration settings
 - [`fit-cases`](https://github.com/fit-project/fit-cases.git) – Case information
 
----
-
-## 🐍 Dependencies
+## Dependencies
 
 Main dependencies are:
 
-- Python `>3.9.0,<3.9.1` or `>3.9.1,<3.13`
-- [`PySide6`](https://pypi.org/project/PySide6/) `6.9.0` – Qt for Python UI framework
-- [`cryptography`](https://pypi.org/project/cryptography/) `^44.0.2` – Cryptographic operations
-- [`bs4`](https://pypi.org/project/bs4/) `^0.0.2` – HTML/XML parsing (BeautifulSoup wrapper)
-- [`xhtml2pdf`](https://pypi.org/project/xhtml2pdf/) `^0.2.17` – PDF generation from HTML
-- [`pypdf2`](https://pypi.org/project/pypdf2/) `^3.0.1` – PDF manipulation
-- [`jinja2`](https://pypi.org/project/Jinja2/) `^3.1.6` – Templating engine for HTML
-
-Custom submodules:
-
-- [`fit-cases`](https://github.com/fit-project/fit-cases.git`) – case information (installed via Git)
+- Python `>=3.11,<3.13`
+- [`PySide6`](https://pypi.org/project/PySide6/) 6.9.0
+- `fit-cases` (custom submodule)
 
 See `pyproject.toml` for full details.
 
 ---
 
+## Requirements
+- **Python** 3.11
+- **Poetry** (recommended for development)
+
 ## 🚀 Installation
 
-Install the module using [Poetry](https://python-poetry.org/):
+You can install the module using **Poetry**:
 
 ```bash
+git clone https://github.com/fit-project/fit-verify-pec.git
+cd fit-verify-pec
 poetry install
+```
+
+To run the verify-pec:
+
+```bash
+poetry run python main.py
+```
+---
+
+## Contributing
+1. Fork this repository.  
+2. Create a new branch (`git checkout -b feat/my-feature`).  
+3. Commit your changes using [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/).  
+4. Submit a Pull Request describing your modification.
+
+---
