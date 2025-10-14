@@ -8,7 +8,13 @@
 ######
 
 import os
-from fit_verify_pec.controller.html_2_pdf import Html2Pdf
+
+from fit_common.core.pdf_report_builder import PdfReportBuilder, ReportType
+from fit_configurations.controller.tabs.general.legal_proceeding_type import (
+    LegalProceedingTypeController,
+)
+from fit_configurations.utils import get_language
+
 from fit_verify_pec.lang import load_translations
 
 
@@ -18,24 +24,24 @@ class GenerateReport:
         self.translations = load_translations()
 
         signature = self.translations["SIGNATURE_NOT_EXIST"]
-        if report_info.get("is_signature") == True:
+        if report_info.get("is_signature"):
             signature = self.translations["SIGNATURE_EXIST"]
 
         integrity = self.translations["INTEGRITY_FAIL"]
-        if report_info.get("is_integrity") == True:
+        if report_info.get("is_integrity"):
             integrity = self.translations["INTEGRITY_SUCCESS"]
 
         provider_name = report_info.get("provider_name")
         is_on_agid_list = self.translations["PROVIDER_IS_NOT_ON_AGID_LIST"].format(
             provider_name
         )
-        if report_info.get("is_on_agid_list") == True:
+        if report_info.get("is_on_agid_list"):
             is_on_agid_list = self.translations["PROVIDER_IS_ON_AGID_LIST"].format(
                 provider_name
             )
 
         revoked = self.translations["PEC_ADDRESS_IS_NOT_REVOKED"]
-        if report_info.get("is_revoked") == True:
+        if report_info.get("is_revoked"):
             revoked = self.translations["PEC_ADDRESS_IS_REVOKED"]
 
         self.__generate(
@@ -104,7 +110,7 @@ class GenerateReport:
             file.write(
                 "======================================================================\n"
             )
-            file.write(f"\n")
+            file.write("\n")
             file.write(f"{self.translations['REPORT_LABEL_RESULTS']}\n")
             file.write(
                 "======================================================================\n"
@@ -140,5 +146,25 @@ class GenerateReport:
                 "======================================================================\n"
             )
 
-        report = Html2Pdf(folder, case_info, ntp)
-        report.generate_pdf(True, info_file_path)
+        language = get_language()
+        translations = (
+            load_translations(lang="it")
+            if language == "Italian"
+            else load_translations()
+        )
+        case_info[
+            "proceeding_type_name"
+        ] = LegalProceedingTypeController().get_proceeding_name_by_id(
+            case_info.get("proceeding_type", 0)
+        )
+
+        report = PdfReportBuilder(
+            ReportType.VERIFY,
+            translations=translations,
+            path=folder,
+            filename="report_integrity_pec_verification.pdf",
+            case_info=case_info,
+        )
+        report.ntp = ntp
+        report.verify_info_file_path = info_file_path
+        report.generate_pdf()
