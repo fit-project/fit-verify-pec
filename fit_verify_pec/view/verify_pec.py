@@ -9,38 +9,32 @@
 
 import os
 
-from PySide6 import QtCore, QtWidgets
-from PySide6.QtWidgets import QFileDialog
-
-from fit_verify_pec.view.verify_pec_ui import (
-    Ui_fit_verify_pec,
-)
-
 from fit_cases.view.case_form_dialog import CaseFormDialog
-
+from fit_common.core import get_version
+from fit_common.core.utils import get_ntp_date_and_time
 from fit_common.gui.utils import (
-    show_finish_verification_dialog,
-    get_verification_label_text,
-    add_label_in_verification_status_list,
-    VerificationTypes,
     Status,
+    VerificationTypes,
+    add_label_in_verification_status_list,
+    get_verification_label_text,
+    show_finish_verification_dialog,
 )
-
-from fit_verify_pec.controller.verify_pec import (
-    verifyPec as verifyPecController,
+from fit_configurations.controller.tabs.general.general import (
+    GeneralController as GeneralConfigurationController,
 )
 from fit_configurations.controller.tabs.network.network_check import (
     NetworkCheckController,
 )
+from PySide6 import QtCore, QtWidgets
+from PySide6.QtWidgets import QFileDialog
 
-from fit_configurations.controller.tabs.general.general import (
-    GeneralController as GeneralConfigurationController,
+from fit_verify_pec.controller.verify_pec import (
+    verifyPec as verifyPecController,
 )
-
-from fit_common.core import get_version
-from fit_common.core.utils import get_ntp_date_and_time
-
 from fit_verify_pec.lang import load_translations
+from fit_verify_pec.view.verify_pec_ui import (
+    Ui_fit_verify_pec,
+)
 
 
 class VerifyPec(QtWidgets.QMainWindow):
@@ -174,7 +168,7 @@ class VerifyPec(QtWidgets.QMainWindow):
                 self.ui.eml_folder_input.text()
             )
         except Exception as e:
-            verification_status = Status.FAIL
+            verification_status = Status.FAILURE
             verification_message = str(e)
 
         label = get_verification_label_text(
@@ -196,7 +190,7 @@ class VerifyPec(QtWidgets.QMainWindow):
                 self.ui.eml_folder_input.text()
             )
         except Exception as e:
-            verification_status = Status.FAIL
+            verification_status = Status.FAILURE
             verification_message = str(e)
 
         label = get_verification_label_text(
@@ -216,7 +210,7 @@ class VerifyPec(QtWidgets.QMainWindow):
         try:
             is_revoked = self.verify_pec_controller.check_revoked()
         except Exception as e:
-            verification_status = Status.FAIL
+            verification_status = Status.FAILURE
             verification_message = str(e)
 
         label = get_verification_label_text(
@@ -238,7 +232,7 @@ class VerifyPec(QtWidgets.QMainWindow):
         try:
             provider_name, is_on_agid_list = self.verify_pec_controller.check_autority()
         except Exception as e:
-            verification_status = Status.FAIL
+            verification_status = Status.FAILURE
             verification_message = str(e)
 
         label = get_verification_label_text(
@@ -259,7 +253,7 @@ class VerifyPec(QtWidgets.QMainWindow):
                 self.ui.eml_folder_input.text()
             )
         except Exception as e:
-            verification_status = Status.FAIL
+            verification_status = Status.FAILURE
             verification_message = str(e)
 
         label = get_verification_label_text(
@@ -278,7 +272,7 @@ class VerifyPec(QtWidgets.QMainWindow):
         try:
             self.verify_pec_controller.ganerate_report(report_info)
         except Exception as e:
-            verification_status = Status.FAIL
+            verification_status = Status.FAILURE
             verification_message = str(e)
 
         label = get_verification_label_text(
