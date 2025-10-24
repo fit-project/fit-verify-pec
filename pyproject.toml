@@ -20,7 +20,7 @@ cryptography = "^44.0.2"
 bs4 = "^0.0.2"
 
 
-fit-cases = {git = "https://github.com/fit-project/fit-cases.git", branch = "chore/update-python-compatibility-3.13"}
+fit-cases = {git = "https://github.com/fit-project/fit-cases.git", rev = "main"}
 
 
 
