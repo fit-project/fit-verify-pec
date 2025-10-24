@@ -14,15 +14,13 @@ include = [
 ]
 
 [tool.poetry.dependencies]
-python = ">=3.11,<3.13"
+python = ">=3.11,<3.14"
 PySide6 = "6.9.0"
 cryptography = "^44.0.2"
 bs4 = "^0.0.2"
-xhtml2pdf = "^0.2.17"
-pypdf2 = "^3.0.1"
-jinja2 = "^3.1.6"
 
-fit-cases = {git = "https://github.com/fit-project/fit-cases.git", rev = "main"}
+
+fit-cases = {git = "https://github.com/fit-project/fit-cases.git", branch = "chore/update-python-compatibility-3.13"}
 
 
 
