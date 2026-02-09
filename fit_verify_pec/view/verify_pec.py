@@ -12,6 +12,7 @@ import os
 from fit_cases.view.case_form_dialog import CaseFormDialog
 from fit_common.core import get_version
 from fit_common.core.utils import get_ntp_date_and_time
+from fit_common.gui.ui_translation import translate_ui
 from fit_common.gui.utils import (
     Status,
     VerificationTypes,
@@ -45,7 +46,7 @@ class VerifyPec(QtWidgets.QMainWindow):
         self.wizard = wizard
         self.verify_pec_controller = verifyPecController()
 
-        self.translations = load_translations()
+        self.__translations = load_translations()
 
         self.__init_ui()
 
@@ -79,6 +80,8 @@ class VerifyPec(QtWidgets.QMainWindow):
         # DISABLE VERIFY BUTTON IF FIELD IS EMPTY
         self.ui.eml_folder_input.textChanged.connect(self.__enable_verify_button)
 
+        translate_ui(self.__translations, self)
+
     def mousePressEvent(self, event):
         self.dragPos = event.globalPosition().toPoint()
 
@@ -94,11 +97,11 @@ class VerifyPec(QtWidgets.QMainWindow):
     def __select_eml_file(self):
         file, check = QFileDialog.getOpenFileName(
             None,
-            self.translations["OPEN_EML_FILE"],
+            self.__translations["OPEN_EML_FILE"],
             os.path.expanduser(
                 GeneralConfigurationController().configuration.get("cases_folder_path")
             ),
-            self.translations["EML_FILES"],
+            self.__translations["EML_FILES"],
         )
         if check:
             self.ui.eml_folder_input.setText(file)
@@ -123,7 +126,7 @@ class VerifyPec(QtWidgets.QMainWindow):
 
             else:
                 label = "INFO: {}".format(
-                    self.translations["NO_MAIL_INFO_FOUD_AFTER_CHECK_EXPIRATIONDATE"]
+                    self.__translations["NO_MAIL_INFO_FOUD_AFTER_CHECK_EXPIRATIONDATE"]
                 )
                 add_label_in_verification_status_list(
                     self.ui.verification_status_list, label
@@ -153,14 +156,14 @@ class VerifyPec(QtWidgets.QMainWindow):
             if self.__generate_report(report_info) == Status.SUCCESS:
                 show_finish_verification_dialog(path, VerificationTypes.PEC)
         else:
-            label = "INFO: {}".format(self.translations["CHECK_EXPIRATIONDATE_FAIL"])
+            label = "INFO: {}".format(self.__translations["CHECK_EXPIRATIONDATE_FAIL"])
             add_label_in_verification_status_list(self.verification_status_list, label)
 
     def __check_expirationdate(self):
 
         email_info = dict()
         verification_status = Status.SUCCESS
-        verification_name = self.translations["CHECK_EXPIRATIONDATE"]
+        verification_name = self.__translations["CHECK_EXPIRATIONDATE"]
         verification_message = ""
 
         try:
@@ -183,7 +186,7 @@ class VerifyPec(QtWidgets.QMainWindow):
 
         signature = {}
         verification_status = Status.SUCCESS
-        verification_name = self.translations["CHECK_SIGNATURE"]
+        verification_name = self.__translations["CHECK_SIGNATURE"]
         verification_message = ""
         try:
             signature = self.verify_pec_controller.check_signature_exist(
@@ -205,7 +208,7 @@ class VerifyPec(QtWidgets.QMainWindow):
 
         is_revoked = False
         verification_status = Status.SUCCESS
-        verification_name = self.translations["CHECK_REVOKED"]
+        verification_name = self.__translations["CHECK_REVOKED"]
         verification_message = ""
         try:
             is_revoked = self.verify_pec_controller.check_revoked()
@@ -227,7 +230,7 @@ class VerifyPec(QtWidgets.QMainWindow):
         is_on_agid_list = False
 
         verification_status = Status.SUCCESS
-        verification_name = self.translations["CHECK_AUTORITY"]
+        verification_name = self.__translations["CHECK_AUTORITY"]
         verification_message = ""
         try:
             provider_name, is_on_agid_list = self.verify_pec_controller.check_autority()
@@ -246,7 +249,7 @@ class VerifyPec(QtWidgets.QMainWindow):
     def __get_mail_info_from_eml(self):
         email_info = {}
         verification_status = Status.SUCCESS
-        verification_name = self.translations["GET_MAIL_INFO_FROM_EML"]
+        verification_name = self.__translations["GET_MAIL_INFO_FROM_EML"]
         verification_message = ""
         try:
             email_info = self.verify_pec_controller.get_mail_info_from_eml(
@@ -267,7 +270,7 @@ class VerifyPec(QtWidgets.QMainWindow):
     def __generate_report(self, report_info):
 
         verification_status = Status.SUCCESS
-        verification_name = self.translations["GENARATE_REPORT"]
+        verification_name = self.__translations["GENARATE_REPORT"]
         verification_message = ""
         try:
             self.verify_pec_controller.ganerate_report(report_info)
