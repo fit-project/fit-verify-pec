@@ -8,6 +8,8 @@ packages = [
     { include = "fit_verify_pec" }
 ]
 
+exclude = ["fit_verify_pec/ui/**"]
+
 include = [
     "fit_assets/templates/*.html",
     "fit_assets/images/logo-640x640.png"
@@ -16,7 +18,7 @@ include = [
 [tool.poetry.dependencies]
 python = ">=3.11,<3.14"
 PySide6 = "6.9.0"
-cryptography = "^44.0.2"
+cryptography = ">=42,<43.1"
 bs4 = "^0.0.2"
 
 
