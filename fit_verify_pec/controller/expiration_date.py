@@ -7,12 +7,13 @@
 # -----
 ######
 
-from fit_common.core.utils import is_cmd, get_platform, resolve_path
+import os
+import subprocess
+from datetime import datetime
 from email import policy
 from email.parser import BytesParser
-from datetime import datetime
-import subprocess
-import os
+
+from fit_common.core import get_platform, is_cmd, resolve_path
 
 
 class ExpirationDate:
