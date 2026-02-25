@@ -7,7 +7,6 @@
 # -----
 ######
 
-import os
 import subprocess
 from datetime import datetime
 from email import policy
@@ -42,14 +41,17 @@ class ExpirationDate:
             text=True,
         )
 
-        # Convert pem to x509
+        # Convert pem to x509 without invoking a shell.
         if extract_pem.returncode == 0:
-            output = extract_pem.stdout
-            os.system(
-                "{} x509 -in {} -text > {}".format(
-                    openssl, pem_file_path, x509_file_path
-                )
+            convert_x509 = subprocess.run(
+                [openssl, "x509", "-in", pem_file_path, "-text"],
+                capture_output=True,
+                text=True,
             )
+            if convert_x509.returncode != 0:
+                raise Exception(convert_x509.stderr)
+            with open(x509_file_path, "w", encoding="utf-8") as x509_file:
+                x509_file.write(convert_x509.stdout)
             result = self.__check_date(eml_file_path, x509_file_path)
         else:
             raise Exception(extract_pem.stderr)
