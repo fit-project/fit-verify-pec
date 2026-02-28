@@ -22,7 +22,7 @@ cryptography = ">=46.0.5,<47"
 bs4 = "^0.0.2"
 
 
-fit-cases = {git = "https://github.com/fit-project/fit-cases.git", tag = "v1.0.0-rc1"}
+fit-cases = {git = "https://github.com/fit-project/fit-cases.git", branch = "main"}
 
 
 [build-system]
